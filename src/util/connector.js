@@ -1,6 +1,15 @@
 const axios = require("axios").default;
-const baseurl = "https://oneapp.2linkq.com/zas";
-//const baseurl = "http://10.128.249.37:8925";
+//const baseurl = "https://oneapp.2linkq.com/zas";
+const baseurl = "http://10.128.249.37:8925";
+
+axios.interceptors.request.use(function (config) {
+  if(localStorage.token){
+    config.headers['Authorization'] = localStorage.token
+  }
+  return config;
+}, function (error) {
+  return Promise.reject(error);
+});
 
 function handleError(error, fail){
   if (error.msg){
@@ -223,10 +232,16 @@ export function msAdd(name, success, fail){
 
 
 export function userLogin(usr, psd, success, fail){
-  axios.post(`${baseurl}/auth/signin`, {username: usr, password: psd})
+  axios.post(`${baseurl}/auth/signin`, undefined , {
+    headers: {
+      username: usr,
+      password: psd
+    }
+  })
   .then(function(response){
-    if(response.data.result === "PASS"){
-      success(`登录成功`, response.data.token)
+    if(response.data === "SUCCESS"){
+      localStorage.token = response.headers['authorization'];
+      success(`登录成功`)
     }else{
       throw {msg: response.data, response: response}
     }

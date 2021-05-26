@@ -5,10 +5,10 @@
       <el-card header="用户登录" class="login-card">
         <el-form>
           <el-form-item label="用户名">
-            <el-input v-model="model.username"> </el-input>
+            <el-input @keyup.enter="login" v-model="model.username"> </el-input>
           </el-form-item>
           <el-form-item label="密码">
-            <el-input type="password" v-model="model.password"> </el-input>
+            <el-input type="password" @keyup.enter="login" v-model="model.password"> </el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="login">登录</el-button>
@@ -35,15 +35,15 @@ export default {
   },
   methods: {
     login() {
+      if(this.model.username && this.model.password){
       userLogin(
-        this.username,
-        this.password,
-        (msg, token) => {
+        this.model.username,
+        this.model.password,
+        (msg) => {
           this.$message({
             type: "success",
             message: msg,
           });
-          localStorage.token = token;
           this.$router.push("/");
         },
         (msg) => {
@@ -54,7 +54,7 @@ export default {
           });
         }
       );
-      console.info("login");
+      }
     },
   },
 };

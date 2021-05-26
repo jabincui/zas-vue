@@ -10,15 +10,20 @@
             :default-active="msID"
             v-loading="msLoading"
           >
-            <el-menu-item
-              v-for="ms in msList"
-              :key="ms.id"
-              :disabled="ms.name === 'ZASGateway'"
-              :index="`/ms/${ms.id}`"
-            >
-              {{ ms.name }}
-            </el-menu-item>
-            <el-menu-item index='' @click="handleNew">添加新服务</el-menu-item>
+            <el-menu-item-group title="微服务管理">
+              <el-menu-item
+                v-for="ms in msList"
+                :key="ms.id"
+                :disabled="ms.name === 'ZASGateway'"
+                :index="`/ms/${ms.id}`"
+              >
+                {{ ms.name }}
+              </el-menu-item>
+              <el-menu-item index="" @click="handleNew"
+                >添加新服务</el-menu-item
+              >
+            </el-menu-item-group>
+            
           </el-menu>
         </el-scrollbar>
       </el-aside>
@@ -45,7 +50,7 @@ export default {
     return {
       msLoading: true,
       msList: [],
-      msID: '',
+      msID: "",
     };
   },
   methods: {
@@ -66,25 +71,26 @@ export default {
     handleSuccess(msg) {
       this.$message({
         message: msg,
-        type: 'success',
+        type: "success",
         duration: 3000,
       });
     },
     handleNew() {
-      this.$prompt('请输入微服务名称', '新建微服务', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-        }).then(({ value }) => {
-          msAdd(value, 
-            (msg, id) => {
-              this.handleSuccess(msg)
-              this.reloadMicroservice()
-              this.$router.push(`/ms/${id}`)
-            },
-            (msg) => this.handleError(msg)
-          )
-        })
-    }
+      this.$prompt("请输入微服务名称", "新建微服务", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+      }).then(({ value }) => {
+        msAdd(
+          value,
+          (msg, id) => {
+            this.handleSuccess(msg);
+            this.reloadMicroservice();
+            this.$router.push(`/ms/${id}`);
+          },
+          (msg) => this.handleError(msg)
+        );
+      });
+    },
   },
   mounted() {
     this.reloadMicroservice();

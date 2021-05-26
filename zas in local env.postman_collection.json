@@ -1,0 +1,558 @@
+{
+	"info": {
+		"_postman_id": "6d01e71d-34ea-4aec-aa17-ea8715b711c7",
+		"name": "zas in local env",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Hello, eureka client!",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9001/hello",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9001",
+					"path": [
+						"hello"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth & route test",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiW1JPTEVfYTJiMjVhMGQtOGExZC00Y2ZkLWIyOGEtNWY0ODRkYjliNTc3XSIsImV4cCI6MTYyMjE4NjYzNCwiaWF0IjoxNjIxNTgxODM0LCJ1c2VybmFtZSI6ImpjY2NjIn0.Xswcg0VjzvRIE6IS5mM-0r10SGWM9dY1AhRZGXR9i-s",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8925/EurekaClient/hello",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"EurekaClient",
+						"hello"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth & route test",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiW1JPTEVfYTJiMjVhMGQtOGExZC00Y2ZkLWIyOGEtNWY0ODRkYjliNTc3XSIsImV4cCI6MTYyMjE4NjYzNCwiaWF0IjoxNjIxNTgxODM0LCJ1c2VybmFtZSI6ImpjY2NjIn0.Xswcg0VjzvRIE6IS5mM-0r10SGWM9dY1AhRZGXR9i-s",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8925/EurekaClient/helloo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"EurekaClient",
+						"helloo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all ms",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8925/microservice/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"microservice",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ms keys",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8925/microservice/keys",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"microservice",
+						"keys"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add ms",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "name",
+						"value": "EurekaClient",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"EurekaClient\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8925/microservice",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"microservice"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "del ms",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "322a7fa5-ea2b-4fc2-8a03-6d724497f9f7",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8925/microservice/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"microservice",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all roles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8925/role/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"role",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add role",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"msId\": \"898eaefb-cd63-4197-900d-cd77e7202cca\",\r\n    \"name\": \"USER\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8925/role",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upd role name",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"\",\r\n    \"name\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8925/role/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"role",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "del role",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8925/role/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"role",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all url",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8925/url/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"url",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add url",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"msId\": \"898eaefb-cd63-4197-900d-cd77e7202cca\",\r\n    \"path\": \"/helloo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8925/url",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"url"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all authority",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8925/authority/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"authority",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add authority",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"msId\": \"898eaefb-cd63-4197-900d-cd77e7202cca\",\r\n    \"urlId\": \"5face8a1-2a72-4b3c-948c-a60e3db92a7d\",\r\n    \"roleId\": \"a2b25a0d-8a1d-4cfd-b28a-5f484db9b577\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8925/authority",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"authority"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "del authority",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "9ddedaec-56e9-47ca-abce-225efc5549e6"
+				},
+				"url": {
+					"raw": "http://localhost:8925/authority/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"authority",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all signup",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8925/signup/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"signup",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"jc test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8925/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add role for signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"6be008ff-9782-46ad-9088-b280f5814b04\",\r\n    \"roleId\": \"a2b25a0d-8a1d-4cfd-b28a-5f484db9b577\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8925/signup/add_role",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"signup",
+						"add_role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all user-roles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "username",
+						"value": "jcccc",
+						"type": "text"
+					},
+					{
+						"key": "password",
+						"value": "123456",
+						"type": "text"
+					},
+					{
+						"key": "signupId",
+						"value": "6be008ff-9782-46ad-9088-b280f5814b04",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8925/auth/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "username",
+						"value": "jc",
+						"type": "text"
+					},
+					{
+						"key": "password",
+						"value": "123456",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8925/auth/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8925",
+					"path": [
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

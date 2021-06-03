@@ -1,13 +1,13 @@
 <template>
   <el-container style="height: 100vh">
     <el-header>ZAS微服务管理系统</el-header>
-    <el-container>
+    <el-container  class="main-block">
       <el-aside width="200px">
         <el-scrollbar>
           <el-menu
             unique-opened
             router
-            :default-active="msID"
+            :default-active="$route.path"
             v-loading="msLoading"
           >
             <el-menu-item-group title="微服务管理">
@@ -23,7 +23,6 @@
                 >添加新服务</el-menu-item
               >
             </el-menu-item-group>
-            
           </el-menu>
         </el-scrollbar>
       </el-aside>
@@ -133,5 +132,9 @@ body {
   background-color: rgb(245, 248, 251);
   padding-bottom: 0;
   overflow: hidden;
+}
+
+.main-block {
+    overflow: hidden;
 }
 </style>

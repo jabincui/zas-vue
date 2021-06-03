@@ -1,18 +1,18 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import Main from '@/Main.vue'
 import Login from '@/components/Login.vue'
 
 import MSDetail from '@/components/MSDetail'
 
 export const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes: [
         {
             path: '/',
             name: 'main',
             component: Main,
             children: [
-                {path: '/ms/:id', component: MSDetail}
+                {path: '/ms/:id', component: MSDetail},
             ],
             meta: {isPublic: false}
         },
@@ -27,7 +27,6 @@ export const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     if(!to.meta.isPublic && (!localStorage.token || !(localStorage.token.substr(0, 6) === 'Bearer'))){
-        console.log('试图访问一个非公开的页面，请先登录！')
         return next('/login');
       }
     else next()

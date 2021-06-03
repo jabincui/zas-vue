@@ -54,7 +54,16 @@ export function getRoleByID(msid, success, fail){
   axios
   .get(`${baseurl}/role/by/${msid}`)
   .then(function(response) {
-    success(response.data.obj)
+    var roleList = response.data.obj;
+    for (var i = 0; i < roleList.length; i++) {
+      if (roleList[i].id.substring(0,2).toLowerCase() === 'pa') {
+        const r = roleList.splice(i, 1);
+        r[0].edit = 'disable';
+        roleList.unshift(r[0]);
+        break;
+      }
+    }
+    success(roleList)
   })
   .catch(error => handleError(error, fail));
 }
@@ -68,22 +77,12 @@ export function getURLByID(msid, success, fail){
   .catch(error => handleError(error, fail));
 }
 
-export function getRoleURLTable(msid, success, fail){
+export function getRoleURLTable(msid, roleList, success, fail){
   axios.all([
-    axios.get(`${baseurl}/role/by/${msid}`),
     axios.get(`${baseurl}/url/by/${msid}`),
     axios.get(`${baseurl}/authority/by/${msid}`),
   ])
-  .then(axios.spread(function(role, url, auth){
-    var roleList = role.data.obj;
-    for (var i = 0; i < roleList.length; i++) {
-      if (roleList[i].id.substring(0,2) === 'pa') {
-        const r = roleList.splice(i, 1);
-        r[0].edit = 'disable';
-        roleList.unshift(r[0]);
-        break;
-      }
-    }
+  .then(axios.spread(function(url, auth){
     const urlList = url.data.obj;
     const authList = auth.data.obj;
     const resTable = urlList.map(uitem => {
@@ -95,7 +94,7 @@ export function getRoleURLTable(msid, success, fail){
       })
       return row
     });
-    success({first: roleList, second: resTable})
+    success(resTable)
   }))
   .catch(error => handleError(error, fail));
 }
@@ -243,6 +242,132 @@ export function userLogin(usr, psd, success, fail){
       localStorage.token = response.headers['authorization'];
       success(`登录成功`)
     }else{
+      throw {msg: response.data, response: response}
+    }
+  })
+  .catch(error => handleError(error, fail))
+}
+
+export function getAllSignUp(success){
+  axios
+  .get(`${baseurl}/signup/all`)
+  .then(function(response) {
+    success(response.data)
+  })
+  .catch(error => handleError(error, msg => console.error(msg)))
+}
+
+export function getRoleSignupTable(roleList, success, fail){
+  axios.get(`${baseurl}/signup/all/`)
+  .then(function(response){
+    const signupTabel = response.data;
+    const resTable = signupTabel.map(suitem => {
+      var row = {name: {id: suitem.id, name: suitem.name}};
+      roleList.map(ritem => {
+        const auth = suitem.rolesId.find(rsitem => {return ritem.id === rsitem})
+        row[ritem.id] = {value: auth !== undefined}
+      })
+      return row
+    });
+    success(resTable)
+  })
+  .catch(error => handleError(error, fail));
+}
+
+export function signupRoleAdd(signupId, roleId, fail){
+  axios.post(`${baseurl}/signup/add_role`, {id: signupId, roleId: roleId})
+  .then(function(response){
+    if(response.data !== "PASS"){
+      throw {msg: response.data, response: response}
+    }
+  })
+  .catch(error => handleError(error, fail))
+}
+
+export function signupRoleDel(signupId, roleId, fail){
+  axios.post(`${baseurl}/signup/remove_role`, {id: signupId, roleId: roleId})
+  .then(function(response){
+    if(response.data !== "PASS"){
+      throw {msg: response.data, response: response}
+    }
+  })
+  .catch(error => handleError(error, fail))
+}
+
+export function signupNameChange(signupId, name, success, fail){
+  axios.post(`${baseurl}/signup/update`, {id: signupId, name: name})
+  .then(function(response){
+    if(response.data === "PASS"){
+      success(`注册入口${name}已保存`)
+    }else{
+      throw {msg: response.data, response: response}
+    }
+  })
+  .catch(error => handleError(error, fail))
+}
+
+export function signupAdd(name, success, fail){
+  axios.post(`${baseurl}/signup`, {name: name})
+  .then(function(response){
+    if(response.data.result === "PASS"){
+      success(`注册入口${name}已添加`)
+    }else{
+      throw {msg: response.data, response: response}
+    }
+  })
+  .catch(error => handleError(error, fail))
+}
+
+export function signupDel(signupId, name, success, fail){
+  axios.post(`${baseurl}/signup/delete`, signupId, {headers: {'Content-Type': 'application/json'}})
+  .then(function(response){
+    if(response.data === "PASS"){
+      success(`路径${name}已删除`)
+    }else{
+      throw {msg: response.data, response: response}
+    }
+  })
+  .catch(error => handleError(error, fail))
+}
+
+export function getRoleUserTable(roleList, success, fail){
+  axios.all([
+    axios.get(`${baseurl}/user/all`),
+    axios.get(`${baseurl}/user_role/all`),
+  ])
+  .then(axios.spread(function(user, userRole){
+    const userList = user.data;
+    const userRoleList = userRole.data;
+    const resTable = userList.map(uitem => {
+      var row = {name: {name:uitem.username}};
+      roleList.map(ritem => {
+        const auth = userRoleList.find(uritem => {return uitem.username === uritem.userId && ritem.id === uritem.roleId})
+        row[ritem.id] = {value: auth !== undefined}
+        row[ritem.id].auth = row[ritem.id].value ? auth : {userId: uitem.username, roleId: ritem.id}
+      })
+      return row
+    });
+    success(resTable)
+  }))
+  .catch(error => handleError(error, fail));
+}
+
+export function userRoleAdd(userId, roleId, success, fail){
+  axios.post(`${baseurl}/user_role`, {userId: userId, roleId: roleId})
+  .then(function(response){
+    if(response.data.result === "PASS"){
+      success(response.data.obj.id)
+    }else{
+      throw {msg: response.data, response: response}
+    }
+  })
+  .catch(error => handleError(error, fail))
+}
+
+export function userRoleDel(authId, fail){
+  axios.post(`${baseurl}/user_role/delete`, authId, {headers: {'Content-Type': 'application/json'}})
+  .then(function(response){
+    if(response.data !== "PASS"){
       throw {msg: response.data, response: response}
     }
   })

@@ -11,8 +11,19 @@ axios.interceptors.request.use(function (config) {
   return Promise.reject(error);
 });
 
+axios.interceptors.response.use(function (response) {
+  if(response.data === "您未登录，没有访问权限"){
+    response.signin = true
+  }
+  return response;
+}, function (error) {
+  return Promise.reject(error);
+});
+
 function handleError(error, fail){
-  if (error.msg){
+  if (error.response && error.response.signin){
+    localStorage.token = undefined;
+  }else if (error.msg){
     fail(`被后台积极拒绝，原因：${error.msg}，请F12检查console并发给管理员YZ。`)
     console.log(error.response)
   } else if (error.response) {

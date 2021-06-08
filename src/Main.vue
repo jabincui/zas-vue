@@ -1,6 +1,11 @@
 <template>
   <el-container style="height: 100vh">
-    <el-header>ZAS微服务管理系统</el-header>
+    <el-header>
+      <div style="display: flex; align-items: center;">
+        <span style="flex: 1">ZAS微服务管理系统 </span>
+        <el-button type="text" style="color: rgb(255, 253, 253);" @click="handleExit"> 退出 </el-button>
+      </div>
+    </el-header>
     <el-container  class="main-block">
       <el-aside width="200px">
         <el-scrollbar>
@@ -90,6 +95,10 @@ export default {
         );
       });
     },
+    handleExit() {
+      localStorage.removeItem('token');
+      this.$router.push('/login')
+    }
   },
   mounted() {
     this.reloadMicroservice();

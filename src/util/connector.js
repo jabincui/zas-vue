@@ -1,6 +1,5 @@
 const axios = require("axios").default;
-//const baseurl = "https://oneapp.2linkq.com/zas";
-const baseurl = "http://10.128.249.37:8925";
+const baseurl = "https://oneapp.2linkq.com/zas";
 
 axios.interceptors.request.use(function (config) {
   if(localStorage.token){

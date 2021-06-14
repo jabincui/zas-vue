@@ -27,3 +27,4 @@ zas-vue-dist.7z
 # else
 ZAS接口设计.pdf
 zas in local env.postman_collection.json
+package-lock.json

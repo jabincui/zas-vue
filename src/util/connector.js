@@ -249,8 +249,12 @@ export function userLogin(usr, psd, success, fail){
   })
   .then(function(response){
     if(response.data === "SUCCESS"){
-      localStorage.token = response.headers['authorization'];
-      success(`登录成功`)
+      if(response.headers['authorization']){
+        localStorage.token = response.headers['authorization'];
+        success(`登录成功`)
+      }else{
+        throw {msg: "后端未正确传回token", response: response}
+      }
     }else{
       throw {msg: response.data, response: response}
     }
